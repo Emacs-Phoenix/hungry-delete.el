@@ -44,7 +44,9 @@
   "Deletes preceding character or all whitespaces."
   (interactive "*P")
   (if (region-active-p)
-      (delete-region)
+      (let ((begin (region-beginning))
+            (end (region-end)))
+        (delete-region begin end))
     (let ((here (point)))
       (skip-chars-backward " \t")
       (if (/= (point) here)
