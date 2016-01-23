@@ -43,11 +43,13 @@
 (defun hungry-backspace (arg)
   "Deletes preceding character or all whitespaces."
   (interactive "*P")
-  (let ((here (point)))
-    (skip-chars-backward " \t")
-    (if (/= (point) here)
-        (delete-region (point) here)
-      (delete-backward-char 1))))
+  (λ (if (region-active-p)
+         (delete-region)
+       (let ((here (point)))
+         (skip-chars-backward " \t")
+         (if (/= (point) here)
+             (delete-region (point) here)
+           (delete-backward-char 1))))))
 
 (defun hungry-delete (arg)
   "Deletes following character or all white spaces and new lines."
